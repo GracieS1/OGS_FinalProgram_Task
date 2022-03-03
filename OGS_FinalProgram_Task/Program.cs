@@ -10,10 +10,10 @@ namespace OGS_FinalProgram_Task
         static void Main(string[] args)
         {
             //IncidentReporting();
-           username();
+            //username();
             //MainMenu();
             // URL();
-          // attendance();
+            attendance();
 
 
 
@@ -33,17 +33,17 @@ namespace OGS_FinalProgram_Task
                     Console.WriteLine("You have entered the correct credentials");
                     Console.WriteLine("Welcome!!");
                 }
-                else 
+                else
                 {
                     Console.WriteLine("Invalid credentials");//not coming up on console //needs to exit if invalid details
                 }
 
 
                 //Console.Clear(); // Built in method  that clears text from the console
-               
+
                 //need to implment an exit function
             }
-        } 
+        }
         static void MainMenu()
         {
 
@@ -93,16 +93,16 @@ namespace OGS_FinalProgram_Task
             //needs to have two parts; part a for adding people, part b for removing people
 
             Console.WriteLine("Press a to add the number of attendees or b to remove attendees");
-            string choice =Console.ReadLine();
+            string choice = Console.ReadLine();
 
 
             float totalcapacity = 0f;       //float is used as % returns a decimal
-          //  float removedguests = 0;
+                                            //  float removedguests = 0;
             float maxcapacity = 125f;       //maximum number of guests allowed in the building
             int currentcapacity = 0;
             float percentage = 0f;
 
-            
+
             while (choice == "a" && percentage < 1)
             {
 
@@ -119,11 +119,11 @@ namespace OGS_FinalProgram_Task
                 }
                 else
                     Console.WriteLine("Sorry, we are full.");
-                  
+
 
             }
             // else if (choice == 2)
-            
+
             //while (choice == "b" && percentage > 1)
             //{
             //    Console.WriteLine("Enter the number of attendees leaving the premises");
@@ -134,7 +134,7 @@ namespace OGS_FinalProgram_Task
             //    percentage = removedguests / maxcapacity;
             //}
 
-            
+
             //    if (percentage > 1)
             //    {
             //        Console.WriteLine($"The Yard is at {percentage * 100}% capacity");
@@ -145,61 +145,62 @@ namespace OGS_FinalProgram_Task
 
 
 
-                //need calculations to add and subtract attendants
-                //display capacity in % everytime a value is entered
-            }
-            static void URL()
+            //need calculations to add and subtract attendants
+            //display capacity in % everytime a value is entered
+        }
+        static void URL()
+        {
+            Console.WriteLine("Press a. to access The Yard`s main website");
+            Console.WriteLine("Press b. to access The Yard`s twitter page");
+            Console.WriteLine("Press c. to search for something on google");
+            Console.WriteLine("Press d. to go back to the main menu");
+
+            string input = Console.ReadLine();
+            if (input == "a")
             {
-                Console.WriteLine("Press a. to access The Yard`s main website");
-                Console.WriteLine("Press b. to access The Yard`s twitter page");
-                Console.WriteLine("Press c. to search for something on google");
-                Console.WriteLine("Press d. to go back to the main menu");
-
-                string input = Console.ReadLine();
-                if (input == "a")
-                {
-                    Process.Start(@"C:\Program Files\Google\Chrome\Application\chrome.exe", "https://theyardmcr.com/");   //allows user to access the website of The Yard
-                }
-                else if (input == "b")
-                {
-                    Process.Start(@"C:\Program Files\Google\Chrome\Application\chrome.exe", "https://twitter.com/theyard_mcr");     //venue twitter page
-                }
-                else if (input == "c")
-                { //need a google url; searches for what user enters. 
-                    Console.WriteLine("Enter a word you would like to search on Google");
-                    string word = Console.ReadLine();
-                    Console.WriteLine();
-                    Process.Start(@"C:\Program Files\Google\Chrome\Application\chrome.exe", $"https://www.google.com/search?q={word}"); //program exits after search
-                }
-                else if (input == "d")
-                {
-                    MainMenu();//not coming up after google search
-                }
-
-
-                
+                Process.Start(@"C:\Program Files\Google\Chrome\Application\chrome.exe", "https://theyardmcr.com/");   //allows user to access the website of The Yard
             }
+            else if (input == "b")
+            {
+                Process.Start(@"C:\Program Files\Google\Chrome\Application\chrome.exe", "https://twitter.com/theyard_mcr");     //venue twitter page
+            }
+            else if (input == "c")
+            { //need a google url; searches for what user enters. 
+                Console.WriteLine("Enter a word you would like to search on Google");
+                string word = Console.ReadLine();
+                Console.WriteLine();
+                Process.Start(@"C:\Program Files\Google\Chrome\Application\chrome.exe", $"https://www.google.com/search?q={word}"); //program exits after search
+            }
+            else if (input == "d")
+            {
+                MainMenu();//not coming up after google search
+            }
+
+
+
+        }
+
         static void IncidentReporting()
         {
             var names = new List<string> { "" };
-            
+
             Console.WriteLine("Please enter the name of staff member writing the report");
-                string name = Console.ReadLine();
+            string name = Console.ReadLine();
 
             using (StreamWriter writer = new StreamWriter("../../../IncidentReport.txt", true))
             {
-              
+
 
                 //                Automatically store the time and date of the incident
-               
+
                 //• The name of the staff member reporting the incident
                 //• Allows the user to enter a short message 
-                
-                //string[] names = new string[125];   //does it have to have a no in the []?
-               
-               
 
-               
+                //string[] names = new string[125];   //does it have to have a no in the []?
+
+
+
+
                 //for (int i = 0; i < 125; i++)
                 //{
                 //    names[i] = Console.ReadLine();
@@ -214,5 +215,171 @@ namespace OGS_FinalProgram_Task
             }
 
         }
+
+
+        static void WriteToFile()
+        {
+            using StreamWriter streamWriter = new("/Users/yemi/Projects/WriteLines.txt", append: true);
+
+            while (true)
+            {
+                Console.WriteLine("Please type your text and press enter. 'q' or 'quit' to exit");
+
+                var input = Console.ReadLine();
+
+                var trimmedInput = input.ToLowerInvariant().Trim();
+
+                if (trimmedInput == "q" || trimmedInput == "quit")
+                {
+                    break;
+                }
+
+                streamWriter.Write(input);
+                Console.WriteLine("Text processed successfully!");
+                Console.WriteLine("Press Enter to continue");
+                Console.Read();
+                continue;
+
+            }
+
+
+        }
+
+        static void OpenVenue()
+        {
+            var attendeeCounter = new AttendeeCounter();
+
+            while (true)
+            {
+                attendeeCounter.PrintInstruction();
+
+                var input = Console.ReadLine();
+
+                var trimmedInput = input.ToLowerInvariant().Trim();
+
+                if (attendeeCounter.IsStringInputValid(input))
+                {
+                    if (trimmedInput == "a" || trimmedInput == "add")
+                    {
+                        Console.WriteLine("Please enter the amount");
+
+                        var addInput = Console.ReadLine();
+
+                        var trimmedAddInput = addInput.Trim();
+
+                        if (attendeeCounter.IsIntInputValid(trimmedAddInput))
+                        {
+                            attendeeCounter.AddAttendees(Int32.Parse(trimmedAddInput));
+                            continue;
+                        }
+                        else
+                        {
+                            IncorrectInputWarning();
+                            continue;
+                        }
+
+                    }
+
+                    if (trimmedInput == "r" || trimmedInput == "remove")
+                    {
+                        Console.WriteLine("Please enter the amount");
+
+                        var addInput = Console.ReadLine();
+
+                        var trimmedAddInput = addInput.Trim();
+
+                        if (attendeeCounter.IsIntInputValid(trimmedAddInput))
+                        {
+                            attendeeCounter.RemoveAttendees(Int32.Parse(trimmedAddInput));
+                            continue;
+                        }
+                        else
+                        {
+                            IncorrectInputWarning();
+                            continue;
+                        }
+                    }
+
+                    if (trimmedInput == "q" || trimmedInput == "quit")
+                    {
+                        break;
+                    }
+                }
+                else
+                {
+                    IncorrectInputWarning();
+                    continue;
+                }
+            }
+
+        }
+
+        static void IncorrectInputWarning()
+        {
+            Console.Beep();
+            Console.WriteLine("Incorrect Input, enter any key to continue");
+            Console.Read();
+            Console.Clear();
+        }
+```
+
+    }
+
+    public class AttendeeCounter
+    {
+        private float TotalAttendees { get; set; }
+
+        private const int MaximumCapacity = 125;
+
+        public void AddAttendees(int attendeeNumbers)
+        {
+            if (TotalAttendees + attendeeNumbers <= MaximumCapacity)
+            {
+                TotalAttendees += attendeeNumbers;
+                PrintAttendeePercentage();
+                return;
+            }
+
+            Console.WriteLine("You cannot exceed the maximum Attendees capacity of 125");
+        }
+
+        public void RemoveAttendees(int attendeeNumbers)
+        {
+            if (TotalAttendees - attendeeNumbers >= 0)
+            {
+                TotalAttendees -= attendeeNumbers;
+                PrintAttendeePercentage();
+                return;
+            }
+
+            Console.WriteLine("You cannot remove more Attendees than present");
+        }
+
+        public void PrintAttendeePercentage()
+        {
+            float attendeePercentage = (TotalAttendees / MaximumCapacity) * 100;
+
+            Console.WriteLine($"Venue Capacity is at {attendeePercentage}%");
+        }
+
+        public void PrintInstruction()
+        {
+            Console.Write("Enter 'a' or 'add' 'r' or 'remove' specified number of Attendees, followed by the amount. 'q' or 'quit' to exit.");
+            Console.WriteLine();
+        }
+
+        public bool IsStringInputValid(string input)
+        {
+            var validInput = new List<string> { "a", "add", "r", "remove", "q", "quit" };
+
+            return validInput.Contains(input);
+        }
+
+        public bool IsIntInputValid(string input)
+        {
+            return Int32.TryParse(input, out _);
+
         }
     }
+
+}
