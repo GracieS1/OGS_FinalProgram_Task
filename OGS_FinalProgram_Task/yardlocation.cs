@@ -8,7 +8,7 @@ namespace OGS_FinalProgram_Task
 {
     public class yardlocation
     {
-        private int attendeenumbers { get; set; }
+        private int attendeenumbers { get; set; }   //gets returns the value of the variable, set assigns a value to the variable
         public void addattendees(int numberOfAttendees)
         {
             attendeenumbers += numberOfAttendees;

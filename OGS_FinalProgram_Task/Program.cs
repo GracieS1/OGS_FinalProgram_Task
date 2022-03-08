@@ -9,11 +9,14 @@ namespace OGS_FinalProgram_Task
     {
         static void Main(string[] args)
         {
-            //IncidentReporting();
+
             //username();
             //MainMenu();
+            //OpenVenue();
+            IncidentReporting();
+            Console.ReadLine();
             // URL();
-            attendance();
+
 
 
 
@@ -21,6 +24,7 @@ namespace OGS_FinalProgram_Task
             {
                 string username = "";
                 string password = "";
+                Console.ForegroundColor = ConsoleColor.Blue;
 
                 Console.WriteLine("\nHello and Welcome to The Yard!");
                 Console.WriteLine("Please enter a username");
@@ -35,13 +39,14 @@ namespace OGS_FinalProgram_Task
                 }
                 else
                 {
-                    Console.WriteLine("Invalid credentials");//not coming up on console //needs to exit if invalid details
+                    IncorrectInputWarning();
+                    Console.WriteLine("You have one more attempt");
+                    // username();   need to call username again but coming with errors
+                    Console.WriteLine("You will now be logged out of the system");
+                    System.Environment.Exit(0);
+                    //not coming up on console //needs to exit if invalid details
                 }
-
-
-                //Console.Clear(); // Built in method  that clears text from the console
-
-                //need to implment an exit function
+                Console.Clear(); // Built in method  that clears text from the console
             }
         }
         static void MainMenu()
@@ -49,9 +54,9 @@ namespace OGS_FinalProgram_Task
 
             Console.WriteLine("\n=======Menu Option========");
             Console.WriteLine("1: Attendance Monitoring");
-            Console.WriteLine("2: Attendee Registration");
+            // Console.WriteLine("2: Attendee Registration");
             Console.WriteLine("3: Incident Reporting");
-            Console.WriteLine("4: Entry Cost Calculator");
+            // Console.WriteLine("4: Entry Cost Calculator");
             Console.WriteLine("5: URL Link");
             Console.WriteLine("6: Exit");
 
@@ -61,95 +66,45 @@ namespace OGS_FinalProgram_Task
             if (selectOption == "1")
             {
                 Console.WriteLine("You have chosen to monitor attendance");
-                attendance();
+                Console.Clear();
+                OpenVenue();
+                Console.Clear();
+
             }
             else if (selectOption == "2")
             {
-                Console.WriteLine("You have chosen to register attendees");
+                Console.WriteLine("You have chosen to register attendees");//not doing, need to remove
             }
             else if (selectOption == "3")
             {
                 Console.WriteLine("You have chosen to report an incident");
+                IncidentReporting();
+                Console.Clear();
+                MainMenu();
             }
             else if (selectOption == "4")
             {
-                Console.WriteLine("You have chosen to calculate entry cost");
+                Console.WriteLine("You have chosen to calculate entry cost");//not doing, need to remove
             }
             else if (selectOption == "5")
             {
                 Console.WriteLine("You have chosen to vist a URL link");
-                //URL();
+                URL();
+                MainMenu();
             }
             else
             {
-                //Environment.ExitCode();
+                System.Environment.Exit(0);
             }
 
         }
 
-        static void attendance()
+
+
+        static void URL()   //URL function starts here
         {
-            //record no of people, user needs to enter a figure
-            //needs to have two parts; part a for adding people, part b for removing people
-
-            Console.WriteLine("Press a to add the number of attendees or b to remove attendees");
-            string choice = Console.ReadLine();
-
-
-            float totalcapacity = 0f;       //float is used as % returns a decimal
-                                            //  float removedguests = 0;
-            float maxcapacity = 125f;       //maximum number of guests allowed in the building
-            int currentcapacity = 0;
-            float percentage = 0f;
-
-
-            while (choice == "a" && percentage < 1)
-            {
-
-                Console.WriteLine("Enter the number of attendees");
-                currentcapacity = int.Parse(Console.ReadLine());
-                totalcapacity = totalcapacity + currentcapacity;
-                percentage = totalcapacity / maxcapacity;
-
-                if (percentage < 1)
-                {
-                    Console.WriteLine($"The Yard is at {percentage * 100}% capacity");
-                    Console.WriteLine("press a to add more attendees or anything else to exit");
-                    choice = Console.ReadLine();
-                }
-                else
-                    Console.WriteLine("Sorry, we are full.");
-
-
-            }
-            // else if (choice == 2)
-
-            //while (choice == "b" && percentage > 1)
-            //{
-            //    Console.WriteLine("Enter the number of attendees leaving the premises");
-            //    removedguests = int.Parse(Console.ReadLine());
-            //    // totalcapacity = totalcapacity + currentcapacity;
-            //    //percentage = totalcapacity / maxcapacity;
-            //    maxcapacity = totalcapacity - removedguests;
-            //    percentage = removedguests / maxcapacity;
-            //}
-
-
-            //    if (percentage > 1)
-            //    {
-            //        Console.WriteLine($"The Yard is at {percentage * 100}% capacity");
-            //        // Console.WriteLine("press 1 to add more attendees or anything else to exit");
-            //        //choice = int.Parse(Console.ReadLine());
-            //    }
-
-
-
-
-            //need calculations to add and subtract attendants
-            //display capacity in % everytime a value is entered
-        }
-        static void URL()
-        {
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine("\n=====URL Menu======");
             Console.WriteLine("Press a. to access The Yard`s main website");
             Console.WriteLine("Press b. to access The Yard`s twitter page");
             Console.WriteLine("Press c. to search for something on google");
@@ -165,7 +120,7 @@ namespace OGS_FinalProgram_Task
                 Process.Start(@"C:\Program Files\Google\Chrome\Application\chrome.exe", "https://twitter.com/theyard_mcr");     //venue twitter page
             }
             else if (input == "c")
-            { //need a google url; searches for what user enters. 
+            { // searches for what user enters. 
                 Console.WriteLine("Enter a word you would like to search on Google");
                 string word = Console.ReadLine();
                 Console.WriteLine();
@@ -177,209 +132,180 @@ namespace OGS_FinalProgram_Task
             }
 
 
+            static void IncidentReporting()
 
-        }
-
-        static void IncidentReporting()
-        {
-            var names = new List<string> { "" };
-
-            Console.WriteLine("Please enter the name of staff member writing the report");
-            string name = Console.ReadLine();
-
-            using (StreamWriter writer = new StreamWriter("../../../IncidentReport.txt", true))
-            {
-
-
-                //                Automatically store the time and date of the incident
-
-                //• The name of the staff member reporting the incident
-                //• Allows the user to enter a short message 
-
-                //string[] names = new string[125];   //does it have to have a no in the []?
+            {//need date and time
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                //int hourOfDay = System.DateTime.Now.Hour; //Gets the current hour of day 
+                //use utc now
 
 
 
 
-                //for (int i = 0; i < 125; i++)
-                //{
-                //    names[i] = Console.ReadLine();
-                //}
-                //StreamWriter sw = new StreamWriter(@"IncidentReport.txt");
-
-                //for (int i = 0; i < 125; i++)
-                //{
-                //    sw.WriteLine(names[i]);
-                //}
-                //sw.Close();
-            }
-
-        }
-
-
-        static void WriteToFile()
-        {
-            using StreamWriter streamWriter = new("/Users/yemi/Projects/WriteLines.txt", append: true);
-
-            while (true)
-            {
-                Console.WriteLine("Please type your text and press enter. 'q' or 'quit' to exit");
+                using StreamWriter streamWriter = new(@"C:\Users\grace\source\repos\OGS_FinalProgram_Task\OGS_FinalProgram_Task\IncidentReport.txt", append: true);
+                Console.WriteLine("\n========Incident Reporting Menu============");
+                Console.WriteLine("Please enter the name of staff member writing the report and press enter. OR 'q' or 'quit' to exit");
 
                 var input = Console.ReadLine();
 
-                var trimmedInput = input.ToLowerInvariant().Trim();
+                var trimmedInput = input.ToLowerInvariant().Trim(); //to lowervariant allows any uppercase letters to be converted to lower case
 
-                if (trimmedInput == "q" || trimmedInput == "quit")
+                if (trimmedInput == "q" || trimmedInput == "quit")  //trim eliminates any empty spaces the user might have inputted on the console
                 {
-                    break;
+                    return;
                 }
 
-                streamWriter.Write(input);
-                Console.WriteLine("Text processed successfully!");
+                streamWriter.WriteLine(input);
                 Console.WriteLine("Press Enter to continue");
-                Console.Read();
-                continue;
+                Console.ReadLine();
 
             }
 
-
-        }
-
-        static void OpenVenue()
-        {
-            var attendeeCounter = new AttendeeCounter();
-
-            while (true)
+            static void OpenVenue()         //helps to reduce errors entered from users on the console
             {
-                attendeeCounter.PrintInstruction();
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                var attendeeCounter = new AttendeeCounter();
 
-                var input = Console.ReadLine();
-
-                var trimmedInput = input.ToLowerInvariant().Trim();
-
-                if (attendeeCounter.IsStringInputValid(input))
+                while (true)
                 {
-                    if (trimmedInput == "a" || trimmedInput == "add")
+                    attendeeCounter.PrintInstruction();
+
+                    var input = Console.ReadLine();
+
+                    var trimmedInput = input.ToLowerInvariant().Trim();
+
+                    if (attendeeCounter.IsStringInputValid(input))
                     {
-                        Console.WriteLine("Please enter the amount");
-
-                        var addInput = Console.ReadLine();
-
-                        var trimmedAddInput = addInput.Trim();
-
-                        if (attendeeCounter.IsIntInputValid(trimmedAddInput))
+                        if (trimmedInput == "a" || trimmedInput == "add")
                         {
-                            attendeeCounter.AddAttendees(Int32.Parse(trimmedAddInput));
-                            continue;
-                        }
-                        else
-                        {
-                            IncorrectInputWarning();
-                            continue;
+                            Console.WriteLine("Please enter the amount of attendees you wish to add");
+
+                            var addInput = Console.ReadLine();
+
+                            var trimmedAddInput = addInput.Trim();
+
+                            if (attendeeCounter.IsIntInputValid(trimmedAddInput))
+                            {
+                                attendeeCounter.AddAttendees(Int32.Parse(trimmedAddInput));
+                                continue;
+                            }
+                            else
+                            {
+                                IncorrectInputWarning();
+                                continue;
+                            }
+
                         }
 
+                        if (trimmedInput == "r" || trimmedInput == "remove")
+                        {
+                            Console.WriteLine("Please enter the amount of attendees you wish to remove");
+
+                            var addInput = Console.ReadLine();
+
+                            var trimmedAddInput = addInput.Trim();
+
+                            if (attendeeCounter.IsIntInputValid(trimmedAddInput))
+                            {
+                                attendeeCounter.RemoveAttendees(Int32.Parse(trimmedAddInput));
+                                continue;
+                            }
+                            else
+                            {
+                                IncorrectInputWarning();
+                                continue;
+                            }
+                        }
+
+                        if (trimmedInput == "q" || trimmedInput == "quit")
+                        {
+                            break;
+                        }
                     }
-
-                    if (trimmedInput == "r" || trimmedInput == "remove")
+                    else
                     {
-                        Console.WriteLine("Please enter the amount");
-
-                        var addInput = Console.ReadLine();
-
-                        var trimmedAddInput = addInput.Trim();
-
-                        if (attendeeCounter.IsIntInputValid(trimmedAddInput))
-                        {
-                            attendeeCounter.RemoveAttendees(Int32.Parse(trimmedAddInput));
-                            continue;
-                        }
-                        else
-                        {
-                            IncorrectInputWarning();
-                            continue;
-                        }
-                    }
-
-                    if (trimmedInput == "q" || trimmedInput == "quit")
-                    {
-                        break;
+                        IncorrectInputWarning();
+                        continue;
                     }
                 }
-                else
+
+            }
+
+
+            static void IncorrectInputWarning()     //alerts the user they have entered the wrong info and gives them a chance to re-enter the correct text or letter
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Beep();
+                Console.WriteLine("Incorrect Input, press enter to continue");
+                Console.ReadLine();
+                Console.Clear();
+            }
+        }
+
+
+
+        public class AttendeeCounter    //attendance monitoring starts from here
+        {
+            private float TotalAttendees { get; set; }  //called from yardlocation
+
+            private const int MaximumCapacity = 125;
+
+            public void AddAttendees(int attendeeNumbers) //calculations for adding attendees
+            {
+                if (TotalAttendees + attendeeNumbers <= MaximumCapacity)
                 {
-                    IncorrectInputWarning();
-                    continue;
+                    TotalAttendees += attendeeNumbers;
+                    PrintAttendeePercentage();
+                    return; //performs the calculation over again as long as maximumcapacity is less/equal to 125
                 }
+
+                Console.WriteLine("You cannot exceed the maximum Attendees capacity of 125");
             }
 
-        }
+            public void RemoveAttendees(int attendeeNumbers)    //calculations for removing attendees
+            {
+                if (TotalAttendees - attendeeNumbers >= 0)
+                {
+                    TotalAttendees -= attendeeNumbers;
+                    PrintAttendeePercentage();
+                    return;
+                }
 
-        static void IncorrectInputWarning()
-        {
-            Console.Beep();
-            Console.WriteLine("Incorrect Input, enter any key to continue");
-            Console.Read();
-            Console.Clear();
+                Console.WriteLine("You cannot remove more Attendees than present");     //prevents number from entering negative
+            }
+
+            public void PrintAttendeePercentage()   //gives capacity in %
+            {
+                float attendeePercentage = (TotalAttendees / MaximumCapacity) * 100;
+
+                Console.WriteLine($"Venue Capacity is at {attendeePercentage}%");
+            }
+
+            public void PrintInstruction()  //instructions for attendee menu
+            {
+                Console.ForegroundColor = ConsoleColor.DarkBlue;
+                Console.WriteLine("\n==========What would you like to do?===========");
+                Console.WriteLine("Please enter 'a' or 'add' to add attendees to the venue");
+                Console.WriteLine("Please enter 'r' or 'remove' to remove specified number of Attendees, followed by the amount.");
+                Console.WriteLine("Please press 'q' or 'quit' to exit.");
+                Console.WriteLine();
+            }
+
+            public bool IsStringInputValid(string input)        //validation commands
+            {
+                var validInput = new List<string> { "a", "add", "r", "remove", "q", "quit" };
+
+                return validInput.Contains(input);
+            }
+
+            public bool IsIntInputValid(string input)
+            {
+                return Int32.TryParse(input, out _);    //prevents program from closing if user enters wrong input
+
+            }
         }
-```
 
     }
-
-    public class AttendeeCounter
-    {
-        private float TotalAttendees { get; set; }
-
-        private const int MaximumCapacity = 125;
-
-        public void AddAttendees(int attendeeNumbers)
-        {
-            if (TotalAttendees + attendeeNumbers <= MaximumCapacity)
-            {
-                TotalAttendees += attendeeNumbers;
-                PrintAttendeePercentage();
-                return;
-            }
-
-            Console.WriteLine("You cannot exceed the maximum Attendees capacity of 125");
-        }
-
-        public void RemoveAttendees(int attendeeNumbers)
-        {
-            if (TotalAttendees - attendeeNumbers >= 0)
-            {
-                TotalAttendees -= attendeeNumbers;
-                PrintAttendeePercentage();
-                return;
-            }
-
-            Console.WriteLine("You cannot remove more Attendees than present");
-        }
-
-        public void PrintAttendeePercentage()
-        {
-            float attendeePercentage = (TotalAttendees / MaximumCapacity) * 100;
-
-            Console.WriteLine($"Venue Capacity is at {attendeePercentage}%");
-        }
-
-        public void PrintInstruction()
-        {
-            Console.Write("Enter 'a' or 'add' 'r' or 'remove' specified number of Attendees, followed by the amount. 'q' or 'quit' to exit.");
-            Console.WriteLine();
-        }
-
-        public bool IsStringInputValid(string input)
-        {
-            var validInput = new List<string> { "a", "add", "r", "remove", "q", "quit" };
-
-            return validInput.Contains(input);
-        }
-
-        public bool IsIntInputValid(string input)
-        {
-            return Int32.TryParse(input, out _);
-
-        }
-    }
-
 }
+
+
