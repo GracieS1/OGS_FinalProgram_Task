@@ -20,35 +20,38 @@ namespace OGS_FinalProgram_Task
 
 
 
-            static void username()
-            {
-                string username = "";
-                string password = "";
-                Console.ForegroundColor = ConsoleColor.Blue;
-
-                Console.WriteLine("\nHello and Welcome to The Yard!");
-                Console.WriteLine("Please enter a username");
-                username = Console.ReadLine();
-                Console.WriteLine("Please enter a password");
-                password = Console.ReadLine();
-
-                if (username == "admin" && password == "pw")    //== means answer given by user matches the answer stored in the condition
-                {
-                    Console.WriteLine("You have entered the correct credentials");
-                    Console.WriteLine("Welcome!!");
-                }
-                else
-                {
-                    IncorrectInputWarning();
-                    Console.WriteLine("You have one more attempt");
-                    // username();   need to call username again but coming with errors
-                    Console.WriteLine("You will now be logged out of the system");
-                    System.Environment.Exit(0);
-                    //not coming up on console //needs to exit if invalid details
-                }
-                Console.Clear(); // Built in method  that clears text from the console
-            }
+            
         }
+
+        static void username()
+        {
+            string username = "";
+            string password = "";
+            Console.ForegroundColor = ConsoleColor.Blue;
+
+            Console.WriteLine("\nHello and Welcome to The Yard!");
+            Console.WriteLine("Please enter a username");
+            username = Console.ReadLine();
+            Console.WriteLine("Please enter a password");
+            password = Console.ReadLine();
+
+            if (username == "admin" && password == "pw")    //== means answer given by user matches the answer stored in the condition
+            {
+                Console.WriteLine("You have entered the correct credentials");
+                Console.WriteLine("Welcome!!");
+            }
+            else
+            {
+                IncorrectInputWarning();
+                Console.WriteLine("You have one more attempt");
+                // username();   need to call username again but coming with errors
+                Console.WriteLine("You will now be logged out of the system");
+                System.Environment.Exit(0);
+                //not coming up on console //needs to exit if invalid details
+            }
+            Console.Clear(); // Built in method  that clears text from the console
+        }
+
         static void MainMenu()
         {
 
@@ -99,7 +102,114 @@ namespace OGS_FinalProgram_Task
 
         }
 
+        static void IncidentReporting()
+        {//need date and time
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            //int hourOfDay = System.DateTime.Now.Hour; //Gets the current hour of day 
+            //use utc now
 
+
+
+
+            using StreamWriter streamWriter = new(@"C:\Users\grace\source\repos\OGS_FinalProgram_Task\OGS_FinalProgram_Task\IncidentReport.txt", append: true);
+            Console.WriteLine("\n========Incident Reporting Menu============");
+            Console.WriteLine("Please enter the name of staff member writing the report and press enter. OR 'q' or 'quit' to exit");
+
+            var input = Console.ReadLine();
+
+            var trimmedInput = input.ToLowerInvariant().Trim(); //to lowervariant allows any uppercase letters to be converted to lower case
+
+            if (trimmedInput == "q" || trimmedInput == "quit")  //trim eliminates any empty spaces the user might have inputted on the console
+            {
+                return;
+            }
+
+            streamWriter.WriteLine(input);
+            Console.WriteLine("Press Enter to continue");
+            Console.ReadLine();
+
+        }
+
+
+        static void OpenVenue()         //helps to reduce errors entered from users on the console
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            var attendeeCounter = new AttendeeCounter();
+
+            while (true)
+            {
+                attendeeCounter.PrintInstruction();
+
+                var input = Console.ReadLine();
+
+                var trimmedInput = input.ToLowerInvariant().Trim();
+
+                if (attendeeCounter.IsStringInputValid(input))
+                {
+                    if (trimmedInput == "a" || trimmedInput == "add")
+                    {
+                        Console.WriteLine("Please enter the amount of attendees you wish to add");
+
+                        var addInput = Console.ReadLine();
+
+                        var trimmedAddInput = addInput.Trim();
+
+                        if (attendeeCounter.IsIntInputValid(trimmedAddInput))
+                        {
+                            attendeeCounter.AddAttendees(Int32.Parse(trimmedAddInput));
+                            continue;
+                        }
+                        else
+                        {
+                            IncorrectInputWarning();
+                            continue;
+                        }
+
+                    }
+
+                    if (trimmedInput == "r" || trimmedInput == "remove")
+                    {
+                        Console.WriteLine("Please enter the amount of attendees you wish to remove");
+
+                        var addInput = Console.ReadLine();
+
+                        var trimmedAddInput = addInput.Trim();
+
+                        if (attendeeCounter.IsIntInputValid(trimmedAddInput))
+                        {
+                            attendeeCounter.RemoveAttendees(Int32.Parse(trimmedAddInput));
+                            continue;
+                        }
+                        else
+                        {
+                            IncorrectInputWarning();
+                            continue;
+                        }
+                    }
+
+                    if (trimmedInput == "q" || trimmedInput == "quit")
+                    {
+                        break;
+                    }
+                }
+                else
+                {
+                    IncorrectInputWarning();
+                    continue;
+                }
+            }
+
+        }
+
+
+        static void IncorrectInputWarning()     //alerts the user they have entered the wrong info and gives them a chance to re-enter the correct text or letter
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Beep();
+            Console.WriteLine("Incorrect Input, press enter to continue");
+            Console.ReadLine();
+            Console.Clear();
+        }
 
         static void URL()   //URL function starts here
         {
@@ -110,6 +220,8 @@ namespace OGS_FinalProgram_Task
             Console.WriteLine("Press c. to search for something on google");
             Console.WriteLine("Press d. to go back to the main menu");
 
+
+            
             string input = Console.ReadLine();
             if (input == "a")
             {
@@ -129,116 +241,6 @@ namespace OGS_FinalProgram_Task
             else if (input == "d")
             {
                 MainMenu();//not coming up after google search
-            }
-
-
-            static void IncidentReporting()
-
-            {//need date and time
-                Console.ForegroundColor = ConsoleColor.Magenta;
-                //int hourOfDay = System.DateTime.Now.Hour; //Gets the current hour of day 
-                //use utc now
-
-
-
-
-                using StreamWriter streamWriter = new(@"C:\Users\grace\source\repos\OGS_FinalProgram_Task\OGS_FinalProgram_Task\IncidentReport.txt", append: true);
-                Console.WriteLine("\n========Incident Reporting Menu============");
-                Console.WriteLine("Please enter the name of staff member writing the report and press enter. OR 'q' or 'quit' to exit");
-
-                var input = Console.ReadLine();
-
-                var trimmedInput = input.ToLowerInvariant().Trim(); //to lowervariant allows any uppercase letters to be converted to lower case
-
-                if (trimmedInput == "q" || trimmedInput == "quit")  //trim eliminates any empty spaces the user might have inputted on the console
-                {
-                    return;
-                }
-
-                streamWriter.WriteLine(input);
-                Console.WriteLine("Press Enter to continue");
-                Console.ReadLine();
-
-            }
-
-            static void OpenVenue()         //helps to reduce errors entered from users on the console
-            {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                var attendeeCounter = new AttendeeCounter();
-
-                while (true)
-                {
-                    attendeeCounter.PrintInstruction();
-
-                    var input = Console.ReadLine();
-
-                    var trimmedInput = input.ToLowerInvariant().Trim();
-
-                    if (attendeeCounter.IsStringInputValid(input))
-                    {
-                        if (trimmedInput == "a" || trimmedInput == "add")
-                        {
-                            Console.WriteLine("Please enter the amount of attendees you wish to add");
-
-                            var addInput = Console.ReadLine();
-
-                            var trimmedAddInput = addInput.Trim();
-
-                            if (attendeeCounter.IsIntInputValid(trimmedAddInput))
-                            {
-                                attendeeCounter.AddAttendees(Int32.Parse(trimmedAddInput));
-                                continue;
-                            }
-                            else
-                            {
-                                IncorrectInputWarning();
-                                continue;
-                            }
-
-                        }
-
-                        if (trimmedInput == "r" || trimmedInput == "remove")
-                        {
-                            Console.WriteLine("Please enter the amount of attendees you wish to remove");
-
-                            var addInput = Console.ReadLine();
-
-                            var trimmedAddInput = addInput.Trim();
-
-                            if (attendeeCounter.IsIntInputValid(trimmedAddInput))
-                            {
-                                attendeeCounter.RemoveAttendees(Int32.Parse(trimmedAddInput));
-                                continue;
-                            }
-                            else
-                            {
-                                IncorrectInputWarning();
-                                continue;
-                            }
-                        }
-
-                        if (trimmedInput == "q" || trimmedInput == "quit")
-                        {
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        IncorrectInputWarning();
-                        continue;
-                    }
-                }
-
-            }
-
-
-            static void IncorrectInputWarning()     //alerts the user they have entered the wrong info and gives them a chance to re-enter the correct text or letter
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.Beep();
-                Console.WriteLine("Incorrect Input, press enter to continue");
-                Console.ReadLine();
-                Console.Clear();
             }
         }
 
